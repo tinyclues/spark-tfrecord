@@ -1,0 +1,21 @@
+---
+version: 2.1
+
+orbs:
+  docker: circleci/docker@1.0.1
+
+jobs:
+  build-spark-tfrecord:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build Spark TFRecord
+          command: docker-compose run spark-tfrecord-builder /src/build-spark-tfrecord.sh
+      - store_artifacts:
+          path: jars
+
+workflows:
+  build:
+    jobs:
+      - build-spark-tfrecord
